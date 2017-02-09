@@ -1,17 +1,33 @@
 package com.wincher.utils;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
  * 用来处理字符串的一些方法
- * 
- * @作者
- * @创建日期 2012-3-2
  * @版本 V 1.0
  */
 public class StringUtil {
+	
+	/**
+	 * @Title: checkIfEmpty
+	 * @Description: (用来判断字符是否为空的方法)
+	 * @param source
+	 * @return boolean 返回类型
+	 */
+	public static String insertSrcToTarget(String source, String separator,String value) {
+		int index = 0;
+		
+	    while (source.indexOf(separator,index) != -1){
+	    	index = source.indexOf(separator,index) + separator.length();
+	    	String temp = source;
+	    	source = temp.substring(0,index) + value + temp.substring(index);
+	    }
+	    return source;
+	}
 
 	/**
 	 * @Title: checkIfEmpty
@@ -20,7 +36,7 @@ public class StringUtil {
 	 * @return boolean 返回类型
 	 */
 	public static boolean checkIfEmpty(String source) {
-		if (source == null || "".equals(source)) {
+		if (source == null || "".equals(source.trim())) {
 			return true;
 		}
 		return false;
@@ -54,7 +70,6 @@ public class StringUtil {
 	/**
 	 * 
 	 * @title trim2null
-	 * @author 李永吉 Mar 21, 2013
 	 * @param str
 	 * @return str或是null
 	 * @description 将全部内容为空格的字符串置为null
@@ -69,8 +84,152 @@ public class StringUtil {
 
 	/**
 	 * 
+	 * @title split
+	 * @param idsText
+	 * @return results
+	 * @description id以逗号分割用字符串保存，转换为Long[]
+	 */
+	public static Long[] split(String idsText, String separator) {
+		if (idsText == null) {
+			return null;
+		}
+		String[] ids = idsText.split(separator);
+		Long[] results = new Long[ids.length];
+		for (int i = 0; i < ids.length; i++) {
+			results[i] = Long.parseLong(ids[i]);
+		}
+		return results;
+	}
+
+	/**
+	 * @title stringToLongArray
+	 * @param ids 可传入"1,2,3"或"1,2,3,"
+	 * @return
+	 * @description 将英文逗号拼接的id字符串转换为long[]数据
+	 */
+	/*public static Long[] stringToLongArray(String ids) {
+		ids = ids.endsWith(",") ? ids.substring(0, ids.length() - 1) : ids;
+		String[] idsArr = ids.split(",");
+		Long[] idsArrLong = (Long[]) ConvertUtils.convert(idsArr, Long.class);
+		return idsArrLong;
+	}
+*/
+	/**
+	 * 
+	 * 方法说明:可传入"1,2,3"
+	 * @param ids
+	 * @return	
+	 */
+	public static List<String> stringToStringList(String ids,String separator) {
+		List<String> listId = new ArrayList<String>();
+		String[] idsArray = ids.split(separator);
+		if (idsArray != null && idsArray.length > 0) {
+			for (int i = 0; i < idsArray.length; i++) {
+				String id = idsArray[i];
+				if (StringUtil.checkIfNotEmpty(id)) {
+					listId.add(id);
+				}
+			}
+		}
+		return listId;
+	}
+
+	/**
+	 * 
+	 * 方法说明:将separator拼接的id字符串转换为String[]数据
+	 * 
+	 * @author   2014-8-26 下午3:38:23
+	 * @param ids
+	 *            可传入"1,2,3"或"1,2,3,"
+	 * @return 字符串数组
+	 */
+	public static String[] stringToStringArray(String ids,String separator) {
+		ids = ids.endsWith(separator) ? ids.substring(0, ids.length() - 1) : ids;
+		String[] idsArr = ids.split(separator);
+		return idsArr;
+	}
+
+	/**
+	 * 方法说明:字符串数组转换为separator隔开的字符串
+	 * @param array
+	 *            字符串数组
+	 * @return 如果字符串数组为null则返回null，否则返回,隔开的字符串
+	 */
+	public static String stringArrayToString(String[] array,String separator) {
+		StringBuilder dest = new StringBuilder();
+		if (array == null) {
+			return null;
+		}
+		for (int i = 0; i < array.length; i++) {
+			dest.append(array[i]);
+			if (i != array.length - 1) {
+				dest.append(separator);
+			}
+		}
+		return dest.toString();
+	}
+
+	/**
+	 * 
+	 * 方法说明:判断separator隔开的字符串是否包含某个元素
+	 * @param src 逗号隔开的字符串
+	 * @param target 指定的元素
+	 * @param separator 分隔符号
+	 * @return true表示存在，false不存在
+	 */
+	public static boolean isExistsInString(String src, String target, String separator) {
+		String[] array = StringUtil.stringToStringArray(src,separator);
+		for (int i = 0; i < array.length; i++) {
+			if (target.equals(array[i])) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * 
+	 * 方法说明:对格式如"1,2,3"进行删减，删减指定下标的元素，如删除下标为1的元素，则返回"1,3"
+	 * @param src
+	 * @param index 从0开始计数
+	 * @return 返回格式如"1,2,3,34"的字符串
+	 */
+	public static String delElementInString(String src, int index, String separator) {
+		List<String> tempStrList = StringUtil.stringToStringList(src, separator);
+		tempStrList.remove(index);
+		StringBuilder sb = new StringBuilder("");
+		if (tempStrList.size() > 0) {
+			for (String str : tempStrList) {
+				sb.append(str + ",");
+			}
+			sb.deleteCharAt(sb.toString().length() - 1);
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * 方法说明:字符串数组转换为逗号隔开的字符串
+	 * @param array
+	 *            字符串数组
+	 * @return 如果字符串数组为null则返回null，否则返回,隔开的字符串
+	 */
+	public static String stringArrayToString(Object[] array, String separator) {
+		StringBuilder dest = new StringBuilder();
+		if (array == null) {
+			return null;
+		}
+		for (int i = 0; i < array.length; i++) {
+			dest.append((String) array[i]);
+			if (i != array.length - 1) {
+				dest.append(separator);
+			}
+		}
+		return dest.toString();
+	}
+
+	/**
+	 * 
 	 * @title formatValue
-	 * @author 李瑞 2013-04-22
 	 * @param str
 	 * @return str
 	 * @description 将单引号、双引号转化成xml中的实体
@@ -85,171 +244,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * 
-	 * @title split
-	 * @author yanglx 2013-6-17
-	 * @param idsText
-	 * @return results
-	 * @description id以逗号分割用字符串保存，转换为Long[]
-	 */
-	public static Long[] split(String idsText) {
-		if (idsText == null) {
-			return null;
-		}
-		String[] ids = idsText.split(",");
-		Long[] results = new Long[ids.length];
-		for (int i = 0; i < ids.length; i++) {
-			results[i] = Long.parseLong(ids[i]);
-		}
-		return results;
-	}
-
-	/**
-	 * @title stringToLongArray
-	 * @author 赵晓霞 2013-8-1
-	 * @param ids
-	 *            可传入"1,2,3"或"1,2,3,"
-	 * @return
-	 * @description 将英文逗号拼接的id字符串转换为long[]数据
-	 */
-	/*public static Long[] stringToLongArray(String ids) {
-		ids = ids.endsWith(",") ? ids.substring(0, ids.length() - 1) : ids;
-		String[] idsArr = ids.split(",");
-		Long[] idsArrLong = (Long[]) ConvertUtils.convert(idsArr, Long.class);
-		return idsArrLong;
-	}
-*/
-	/**
-	 * 
-	 * 方法说明:可传入"1,2,3"
-	 * 
-	 * @author 陈春杰 2014-9-22 下午2:13:49
-	 * @param ids
-	 * @return	
-	 */
-	public static List<String> stringToStringList(String ids) {
-		List<String> idString = new ArrayList<String>();
-		String[] idsArray = ids.split(",");
-
-		if (idsArray != null && idsArray.length > 0) {
-
-			for (int i = 0; i < idsArray.length; i++) {
-				String id = idsArray[i];
-				if (StringUtil.checkIfNotEmpty(id)) {
-					idString.add(id);
-				}
-			}
-		}
-		return idString;
-	}
-
-	/**
-	 * 
-	 * 方法说明:将英文逗号拼接的id字符串转换为String[]数据
-	 * 
-	 * @author 王辉阳 2014-8-26 下午3:38:23
-	 * @param ids
-	 *            可传入"1,2,3"或"1,2,3,"
-	 * @return 字符串数组
-	 */
-	public static String[] stringToStringArray(String ids) {
-		ids = ids.endsWith(",") ? ids.substring(0, ids.length() - 1) : ids;
-		String[] idsArr = ids.split(",");
-		return idsArr;
-	}
-
-	/**
-	 * 方法说明:字符串数组转换为逗号隔开的字符串
-	 * 
-	 * @author 王辉阳 2014-9-3 下午3:47:50
-	 * @param array
-	 *            字符串数组
-	 * @return 如果字符串数组为null则返回null，否则返回,隔开的字符串
-	 */
-	public static String stringArrayToString(String[] array) {
-		StringBuilder dest = new StringBuilder();
-		if (array == null) {
-			return null;
-		}
-		for (int i = 0; i < array.length; i++) {
-			dest.append(array[i]);
-			if (i != array.length - 1) {
-				dest.append(",");
-			}
-		}
-		return dest.toString();
-	}
-
-	/**
-	 * 
-	 * 方法说明:判断逗号隔开的字符串是否包含某个元素
-	 * 
-	 * @author 王辉阳 2014-11-19 下午1:39:44
-	 * @param src
-	 *            逗号隔开的字符串
-	 * @param element
-	 *            指定的元素
-	 * @return true表示存在，false不存在
-	 */
-	public static boolean isExistsInString(String src, String element) {
-		String[] array = StringUtil.stringToStringArray(src);
-		for (int i = 0; i < array.length; i++) {
-			if (element.equals(array[i])) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * 
-	 * 方法说明:对格式如"1,2,3"进行删减，删减指定下标的元素，如删除下标为1的元素，则返回"1,3"
-	 * 
-	 * @author 王辉阳 2014-11-21 上午11:32:43
-	 * @param src
-	 * @param index
-	 *            从0开始计数
-	 * @return 返回格式如"1,2,3,34"的字符串
-	 */
-	public static String delElementInString(String src, int index) {
-		List<String> tempStrList = StringUtil.stringToStringList(src);
-		tempStrList.remove(index);
-		StringBuilder sb = new StringBuilder("");
-		if (tempStrList.size() > 0) {
-			for (String str : tempStrList) {
-				sb.append(str + ",");
-			}
-			sb.deleteCharAt(sb.toString().length() - 1);
-		}
-		return sb.toString();
-	}
-
-	/**
-	 * 方法说明:字符串数组转换为逗号隔开的字符串
-	 * 
-	 * @author 王辉阳 2014-9-3 下午3:47:50
-	 * @param array
-	 *            字符串数组
-	 * @return 如果字符串数组为null则返回null，否则返回,隔开的字符串
-	 */
-	public static String stringArrayToString(Object[] array) {
-		StringBuilder dest = new StringBuilder();
-		if (array == null) {
-			return null;
-		}
-		for (int i = 0; i < array.length; i++) {
-			dest.append((String) array[i]);
-			if (i != array.length - 1) {
-				dest.append(",");
-			}
-		}
-		return dest.toString();
-	}
-
-	/**
 	 * single quote mark string 方法说明:转换成带有单引号且逗号隔开的字符串，如"'ab','cc','dd'"
 	 * 
-	 * @author 王辉阳 2014-9-3 下午3:53:05
+	 * @author   2014-9-3 下午3:53:05
 	 * @param array
 	 * @return
 	 */
@@ -270,8 +267,6 @@ public class StringUtil {
 
 	/**
 	 * single quote mark string 方法说明:转换成带有单引号且逗号隔开的字符串，如"'ab','cc','dd'"
-	 * 
-	 * @author 王辉阳 2014-9-3 下午3:53:05
 	 * @param array
 	 * @return
 	 */
@@ -293,7 +288,6 @@ public class StringUtil {
 
 	/**
 	 * @title replaceBlank
-	 * @author 赵晓霞 2013-12-3
 	 * @param str
 	 * @return
 	 * @description 去掉所有的空格、换行、回车、水平制表符 注： \n 回车( ) \t 水平制表符( ) \s 空格(\u0008) \r
@@ -311,7 +305,6 @@ public class StringUtil {
 
 	/**
 	 * @title existsStrCount
-	 * @author 陈树淘 2014-4-29
 	 * @param sourceStr
 	 * @param targetStr
 	 * @return
@@ -329,7 +322,6 @@ public class StringUtil {
 
 	/**
 	 * @title subStringByTag
-	 * @author 陈树淘 2014-4-29
 	 * @param sourceStr
 	 * @param targetStr
 	 * @param end
@@ -352,7 +344,6 @@ public class StringUtil {
 
 	/**
 	 * @title fillPageStyle
-	 * @author 陈树淘 2014-4-29
 	 * @param sourceStr
 	 * @param url
 	 * @param totalPage
@@ -411,21 +402,18 @@ public class StringUtil {
 
 	/**
 	 * 
-	 * 方法说明:字符串list转换成逗号隔开的字符串 "a,2,5,h"
-	 * 
-	 * @author 张思远 2014-11-28 上午9:50:33
-	 * @param @param
-	 *            list
-	 * @param @return
+	 * 方法说明:字符串list转换成separator隔开的字符串 "a,2,5,h"
+	 * @paramlist
+	 * @param
 	 * @return String
 	 */
-	public static String stringListToString(List<String> list) {
+	public static String stringListToString(List<String> list, String separator) {
 		// 1，循环list
 		StringBuilder dest = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
 			dest.append(list.get(i));
 			if (i != (list.size() - 1)) {
-				dest.append(",");
+				dest.append(separator);
 			}
 		}
 		return dest.toString();
@@ -433,46 +421,21 @@ public class StringUtil {
 
 	/**
 	 * 
-	 * 方法说明:字符串list转换成逗号隔开的字符串 "a,2,5,h"
-	 * 
-	 * @author 张思远 2014-11-28 上午9:50:33
+	 * 方法说明:字符串list转换成separator隔开的字符串 "a,2,5,h"
 	 * @param @param
 	 *            list
 	 * @param @return
 	 * @return String
 	 */
-	public static String stringListToString(String[] list) {
+	public static String stringListToString(String[] list, String separator) {
 		// 1，循环list
 		StringBuilder dest = new StringBuilder();
 		for (int i = 0; i < list.length; i++) {
 			dest.append(list[i]);
 			if (i != (list.length - 1)) {
-				dest.append(",");
+				dest.append(separator);
 			}
 		}
 		return dest.toString();
 	}
-
-	/**
-	 * 方法说明: 删除Combotree传入的0值，例如 0,1,2,0,3,0 过滤后结果1,2,3
-	 * 
-	 * @author 方来 2014-12-23 下午2:43:18
-	 * @param itemType
-	 * @return
-	 */
-	public static String removeZeroFlag(String itemType) {
-		if (itemType.indexOf("0,") == 0) {
-			itemType = itemType.substring(2);
-		}
-
-		if (itemType.indexOf(",0,") > 0) {
-			itemType = itemType.replaceAll(",0,", "");
-		}
-
-		if (itemType.indexOf(",0") == itemType.length() - 2) {
-			itemType = itemType.substring(0, itemType.length() - 2);
-		}
-		return itemType;
-	}
-
 }

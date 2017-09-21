@@ -1,8 +1,6 @@
 package com.wincher.utils;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -38,6 +36,33 @@ public class GzipUtil {
 		bos.flush();
 		bos.close();
 		return ret;
+	}
+	
+	public static void main(String[] args) throws IOException {
+		//读取文件
+		String readPath = System.getenv("suer.dir") +
+				File.separatorChar + "sources" +
+				File.separatorChar + "006.jpg";
+		System.out.println(readPath);
+		File file = new File(readPath);
+		FileInputStream fis = new FileInputStream(file);
+		byte[] data = new byte[fis.available()];
+		fis.read(data);
+		fis.close();
+		System.out.println("文件原始大小: " + data.length);
+		//test gzip
+		byte[] ret1 = GzipUtil.gzip(data);
+		System.out.println("压缩后大小: " + ret1.length);
+		byte[] ret2 = GzipUtil.ungzip(ret1);
+		System.out.println("解压后大小: " + ret2.length);
+		
+		String writePath = System.getProperty("user.dir") +
+				File.separatorChar + "receive" +
+				File.separatorChar + "006.jpg";
+		FileOutputStream fos = new FileOutputStream(writePath);
+		fos.write(ret2);
+		fos.close();
+		
 	}
 	
 }

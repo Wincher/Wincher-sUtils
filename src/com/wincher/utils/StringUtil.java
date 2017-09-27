@@ -1,39 +1,37 @@
 package com.wincher.utils;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
- * ÓÃÀ´´¦Àí×Ö·û´®µÄÒ»Ğ©·½·¨
- * @°æ±¾ V 1.0
+ * ç”¨æ¥å¤„ç†å­—ç¬¦ä¸²çš„ä¸€äº›æ–¹æ³•
+ * @ç‰ˆæœ¬ V 1.0
  */
 public class StringUtil {
 	
 	/**
 	 * @Title: checkIfEmpty
-	 * @Description: (ÓÃÀ´ÅĞ¶Ï×Ö·ûÊÇ·ñÎª¿ÕµÄ·½·¨)
+	 * @Description: (ç”¨æ¥åˆ¤æ–­å­—ç¬¦æ˜¯å¦ä¸ºç©ºçš„æ–¹æ³•)
 	 * @param source
-	 * @return boolean ·µ»ØÀàĞÍ
+	 * @return boolean è¿”å›ç±»å‹
 	 */
 	public static String insertSrcToTarget(String source, String separator,String value) {
 		int index = 0;
 		
-	    while (source.indexOf(separator,index) != -1){
-	    	index = source.indexOf(separator,index) + separator.length();
-	    	String temp = source;
-	    	source = temp.substring(0,index) + value + temp.substring(index);
-	    }
-	    return source;
+		while (source.indexOf(separator,index) != -1){
+			index = source.indexOf(separator,index) + separator.length();
+			String temp = source;
+			source = temp.substring(0,index) + value + temp.substring(index);
+		}
+		return source;
 	}
-
+	
 	/**
 	 * @Title: checkIfEmpty
-	 * @Description: (ÓÃÀ´ÅĞ¶Ï×Ö·ûÊÇ·ñÎª¿ÕµÄ·½·¨)
+	 * @Description: (ç”¨æ¥åˆ¤æ–­å­—ç¬¦æ˜¯å¦ä¸ºç©ºçš„æ–¹æ³•)
 	 * @param source
-	 * @return boolean ·µ»ØÀàĞÍ
+	 * @return boolean è¿”å›ç±»å‹
 	 */
 	public static boolean checkIfEmpty(String source) {
 		if (source == null || "".equals(source.trim())) {
@@ -41,22 +39,22 @@ public class StringUtil {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * @Title: checkIfNotEmpty
-	 * @Description: (ÅĞ¶Ï×Ö·ûÊÇ·ñ²»Îª¿Õ)
+	 * @Description: (åˆ¤æ–­å­—ç¬¦æ˜¯å¦ä¸ä¸ºç©º)
 	 * @param source
-	 * @return boolean ·µ»ØÀàĞÍ
+	 * @return boolean è¿”å›ç±»å‹
 	 */
 	public static boolean checkIfNotEmpty(String source) {
 		return !checkIfEmpty(source);
 	}
-
+	
 	/**
 	 * @Title: isNumeric
-	 * @Description: (ÅĞ¶Ï×Ö·û´®ÊÇ·ñÎªÊı×Ö)
+	 * @Description: (åˆ¤æ–­å­—ç¬¦ä¸²æ˜¯å¦ä¸ºæ•°å­—)
 	 * @param str
-	 * @return boolean ·µ»ØÀàĞÍ
+	 * @return boolean è¿”å›ç±»å‹
 	 */
 	public static boolean isNumeric(String str) {
 		for (int i = 0; i < str.length(); i++) {
@@ -66,13 +64,13 @@ public class StringUtil {
 		}
 		return true;
 	}
-
+	
 	/**
-	 * 
+	 *
 	 * @title trim2null
 	 * @param str
-	 * @return str»òÊÇnull
-	 * @description ½«È«²¿ÄÚÈİÎª¿Õ¸ñµÄ×Ö·û´®ÖÃÎªnull
+	 * @return stræˆ–æ˜¯null
+	 * @description å°†å…¨éƒ¨å†…å®¹ä¸ºç©ºæ ¼çš„å­—ç¬¦ä¸²ç½®ä¸ºnull
 	 */
 	public static String trim2null(String str) {
 		if (str == null)
@@ -81,13 +79,13 @@ public class StringUtil {
 			return null;
 		return str;
 	}
-
+	
 	/**
-	 * 
+	 *
 	 * @title split
 	 * @param idsText
 	 * @return results
-	 * @description idÒÔ¶ººÅ·Ö¸îÓÃ×Ö·û´®±£´æ£¬×ª»»ÎªLong[]
+	 * @description idä»¥é€—å·åˆ†å‰²ç”¨å­—ç¬¦ä¸²ä¿å­˜ï¼Œè½¬æ¢ä¸ºLong[]
 	 */
 	public static Long[] split(String idsText, String separator) {
 		if (idsText == null) {
@@ -100,12 +98,12 @@ public class StringUtil {
 		}
 		return results;
 	}
-
+	
 	/**
 	 * @title stringToLongArray
-	 * @param ids ¿É´«Èë"1,2,3"»ò"1,2,3,"
+	 * @param ids å¯ä¼ å…¥"1,2,3"æˆ–"1,2,3,"
 	 * @return
-	 * @description ½«Ó¢ÎÄ¶ººÅÆ´½ÓµÄid×Ö·û´®×ª»»Îªlong[]Êı¾İ
+	 * @description å°†è‹±æ–‡é€—å·æ‹¼æ¥çš„idå­—ç¬¦ä¸²è½¬æ¢ä¸ºlong[]æ•°æ®
 	 */
 	/*public static Long[] stringToLongArray(String ids) {
 		ids = ids.endsWith(",") ? ids.substring(0, ids.length() - 1) : ids;
@@ -115,10 +113,10 @@ public class StringUtil {
 	}
 */
 	/**
-	 * 
-	 * ·½·¨ËµÃ÷:¿É´«Èë"1,2,3"
+	 *
+	 * æ–¹æ³•è¯´æ˜:å¯ä¼ å…¥"1,2,3"
 	 * @param ids
-	 * @return	
+	 * @return
 	 */
 	public static List<String> stringToStringList(String ids,String separator) {
 		List<String> listId = new ArrayList<String>();
@@ -133,27 +131,27 @@ public class StringUtil {
 		}
 		return listId;
 	}
-
+	
 	/**
-	 * 
-	 * ·½·¨ËµÃ÷:½«separatorÆ´½ÓµÄid×Ö·û´®×ª»»ÎªString[]Êı¾İ
-	 * 
-	 * @author   2014-8-26 ÏÂÎç3:38:23
+	 *
+	 * æ–¹æ³•è¯´æ˜:å°†separatoræ‹¼æ¥çš„idå­—ç¬¦ä¸²è½¬æ¢ä¸ºString[]æ•°æ®
+	 *
+	 * @author   2014-8-26 ä¸‹åˆ3:38:23
 	 * @param ids
-	 *            ¿É´«Èë"1,2,3"»ò"1,2,3,"
-	 * @return ×Ö·û´®Êı×é
+	 *            å¯ä¼ å…¥"1,2,3"æˆ–"1,2,3,"
+	 * @return å­—ç¬¦ä¸²æ•°ç»„
 	 */
 	public static String[] stringToStringArray(String ids,String separator) {
 		ids = ids.endsWith(separator) ? ids.substring(0, ids.length() - 1) : ids;
 		String[] idsArr = ids.split(separator);
 		return idsArr;
 	}
-
+	
 	/**
-	 * ·½·¨ËµÃ÷:×Ö·û´®Êı×é×ª»»Îªseparator¸ô¿ªµÄ×Ö·û´®
+	 * æ–¹æ³•è¯´æ˜:å­—ç¬¦ä¸²æ•°ç»„è½¬æ¢ä¸ºseparatoréš”å¼€çš„å­—ç¬¦ä¸²
 	 * @param array
-	 *            ×Ö·û´®Êı×é
-	 * @return Èç¹û×Ö·û´®Êı×éÎªnullÔò·µ»Ønull£¬·ñÔò·µ»Ø,¸ô¿ªµÄ×Ö·û´®
+	 *            å­—ç¬¦ä¸²æ•°ç»„
+	 * @return å¦‚æœå­—ç¬¦ä¸²æ•°ç»„ä¸ºnullåˆ™è¿”å›nullï¼Œå¦åˆ™è¿”å›,éš”å¼€çš„å­—ç¬¦ä¸²
 	 */
 	public static String stringArrayToString(String[] array,String separator) {
 		StringBuilder dest = new StringBuilder();
@@ -168,14 +166,14 @@ public class StringUtil {
 		}
 		return dest.toString();
 	}
-
+	
 	/**
-	 * 
-	 * ·½·¨ËµÃ÷:ÅĞ¶Ïseparator¸ô¿ªµÄ×Ö·û´®ÊÇ·ñ°üº¬Ä³¸öÔªËØ
-	 * @param src ¶ººÅ¸ô¿ªµÄ×Ö·û´®
-	 * @param target Ö¸¶¨µÄÔªËØ
-	 * @param separator ·Ö¸ô·ûºÅ
-	 * @return true±íÊ¾´æÔÚ£¬false²»´æÔÚ
+	 *
+	 * æ–¹æ³•è¯´æ˜:åˆ¤æ–­separatoréš”å¼€çš„å­—ç¬¦ä¸²æ˜¯å¦åŒ…å«æŸä¸ªå…ƒç´ 
+	 * @param src é€—å·éš”å¼€çš„å­—ç¬¦ä¸²
+	 * @param target æŒ‡å®šçš„å…ƒç´ 
+	 * @param separator åˆ†éš”ç¬¦å·
+	 * @return trueè¡¨ç¤ºå­˜åœ¨ï¼Œfalseä¸å­˜åœ¨
 	 */
 	public static boolean isExistsInString(String src, String target, String separator) {
 		String[] array = StringUtil.stringToStringArray(src,separator);
@@ -186,13 +184,13 @@ public class StringUtil {
 		}
 		return false;
 	}
-
+	
 	/**
-	 * 
-	 * ·½·¨ËµÃ÷:¶Ô¸ñÊ½Èç"1,2,3"½øĞĞÉ¾¼õ£¬É¾¼õÖ¸¶¨ÏÂ±êµÄÔªËØ£¬ÈçÉ¾³ıÏÂ±êÎª1µÄÔªËØ£¬Ôò·µ»Ø"1,3"
+	 *
+	 * æ–¹æ³•è¯´æ˜:å¯¹æ ¼å¼å¦‚"1,2,3"è¿›è¡Œåˆ å‡ï¼Œåˆ å‡æŒ‡å®šä¸‹æ ‡çš„å…ƒç´ ï¼Œå¦‚åˆ é™¤ä¸‹æ ‡ä¸º1çš„å…ƒç´ ï¼Œåˆ™è¿”å›"1,3"
 	 * @param src
-	 * @param index ´Ó0¿ªÊ¼¼ÆÊı
-	 * @return ·µ»Ø¸ñÊ½Èç"1,2,3,34"µÄ×Ö·û´®
+	 * @param index ä»0å¼€å§‹è®¡æ•°
+	 * @return è¿”å›æ ¼å¼å¦‚"1,2,3,34"çš„å­—ç¬¦ä¸²
 	 */
 	public static String delElementInString(String src, int index, String separator) {
 		List<String> tempStrList = StringUtil.stringToStringList(src, separator);
@@ -206,12 +204,12 @@ public class StringUtil {
 		}
 		return sb.toString();
 	}
-
+	
 	/**
-	 * ·½·¨ËµÃ÷:×Ö·û´®Êı×é×ª»»Îª¶ººÅ¸ô¿ªµÄ×Ö·û´®
+	 * æ–¹æ³•è¯´æ˜:å­—ç¬¦ä¸²æ•°ç»„è½¬æ¢ä¸ºé€—å·éš”å¼€çš„å­—ç¬¦ä¸²
 	 * @param array
-	 *            ×Ö·û´®Êı×é
-	 * @return Èç¹û×Ö·û´®Êı×éÎªnullÔò·µ»Ønull£¬·ñÔò·µ»Ø,¸ô¿ªµÄ×Ö·û´®
+	 *            å­—ç¬¦ä¸²æ•°ç»„
+	 * @return å¦‚æœå­—ç¬¦ä¸²æ•°ç»„ä¸ºnullåˆ™è¿”å›nullï¼Œå¦åˆ™è¿”å›,éš”å¼€çš„å­—ç¬¦ä¸²
 	 */
 	public static String stringArrayToString(Object[] array, String separator) {
 		StringBuilder dest = new StringBuilder();
@@ -226,14 +224,14 @@ public class StringUtil {
 		}
 		return dest.toString();
 	}
-
+	
 	/**
-	 * 
+	 *
 	 * @title formatValue
 	 * @param str
 	 * @return str
-	 * @description ½«µ¥ÒıºÅ¡¢Ë«ÒıºÅ×ª»¯³ÉxmlÖĞµÄÊµÌå
-	 * 
+	 * @description å°†å•å¼•å·ã€åŒå¼•å·è½¬åŒ–æˆxmlä¸­çš„å®ä½“
+	 *
 	 */
 	public static String formatValue(String str) {
 		if (str == null) {
@@ -242,16 +240,16 @@ public class StringUtil {
 		str = str.replace("\'", "&apos;").replace("\"", "&quot;");
 		return str;
 	}
-
+	
 	/**
-	 * single quote mark string ·½·¨ËµÃ÷:×ª»»³É´øÓĞµ¥ÒıºÅÇÒ¶ººÅ¸ô¿ªµÄ×Ö·û´®£¬Èç"'ab','cc','dd'"
-	 * 
-	 * @author   2014-9-3 ÏÂÎç3:53:05
+	 * single quote mark string æ–¹æ³•è¯´æ˜:è½¬æ¢æˆå¸¦æœ‰å•å¼•å·ä¸”é€—å·éš”å¼€çš„å­—ç¬¦ä¸²ï¼Œå¦‚"'ab','cc','dd'"
+	 *
+	 * @author   2014-9-3 ä¸‹åˆ3:53:05
 	 * @param array
 	 * @return
 	 */
 	public static String stringArrayToSQString(Object[] array) {
-
+		
 		StringBuilder dest = new StringBuilder();
 		if (array == null) {
 			return null;
@@ -264,14 +262,14 @@ public class StringUtil {
 		}
 		return ("\'" + dest.toString().replaceAll(",", "\',\'") + "\'").toString();
 	}
-
+	
 	/**
-	 * single quote mark string ·½·¨ËµÃ÷:×ª»»³É´øÓĞµ¥ÒıºÅÇÒ¶ººÅ¸ô¿ªµÄ×Ö·û´®£¬Èç"'ab','cc','dd'"
+	 * single quote mark string æ–¹æ³•è¯´æ˜:è½¬æ¢æˆå¸¦æœ‰å•å¼•å·ä¸”é€—å·éš”å¼€çš„å­—ç¬¦ä¸²ï¼Œå¦‚"'ab','cc','dd'"
 	 * @param array
 	 * @return
 	 */
 	public static String stringArrayToSQString(String str) {
-
+		
 		StringBuilder dest = new StringBuilder();
 		if (str == null) {
 			return null;
@@ -285,13 +283,13 @@ public class StringUtil {
 		}
 		return ("\'" + dest.toString().replaceAll(",", "\',\'") + "\'").toString();
 	}
-
+	
 	/**
 	 * @title replaceBlank
 	 * @param str
 	 * @return
-	 * @description È¥µôËùÓĞµÄ¿Õ¸ñ¡¢»»ĞĞ¡¢»Ø³µ¡¢Ë®Æ½ÖÆ±í·û ×¢£º \n »Ø³µ( ) \t Ë®Æ½ÖÆ±í·û( ) \s ¿Õ¸ñ(\u0008) \r
-	 *              »»ĞĞ( )
+	 * @description å»æ‰æ‰€æœ‰çš„ç©ºæ ¼ã€æ¢è¡Œã€å›è½¦ã€æ°´å¹³åˆ¶è¡¨ç¬¦ æ³¨ï¼š \n å›è½¦( ) \t æ°´å¹³åˆ¶è¡¨ç¬¦( ) \s ç©ºæ ¼(\u0008) \r
+	 *              æ¢è¡Œ( )
 	 */
 	public static String replaceBlank(String str) {
 		String dest = "";
@@ -302,13 +300,13 @@ public class StringUtil {
 		}
 		return dest;
 	}
-
+	
 	/**
 	 * @title existsStrCount
 	 * @param sourceStr
 	 * @param targetStr
 	 * @return
-	 * @description ueditor·ÖÒ³±êÇ©Êı
+	 * @description ueditoråˆ†é¡µæ ‡ç­¾æ•°
 	 */
 	public static int existsStrCount(String sourceStr, String targetStr) {
 		int count = 0;
@@ -319,14 +317,14 @@ public class StringUtil {
 		}
 		return count;
 	}
-
+	
 	/**
 	 * @title subStringByTag
 	 * @param sourceStr
 	 * @param targetStr
 	 * @param end
 	 * @return
-	 * @description ueditor·ÖÒ³¸»ÎÄ±¾·Ö¸ô
+	 * @description ueditoråˆ†é¡µå¯Œæ–‡æœ¬åˆ†éš”
 	 */
 	public static String subStringByTag(String sourceStr, String targetStr, int end) {
 		int count = 0;
@@ -341,7 +339,7 @@ public class StringUtil {
 		}
 		return tempStr;
 	}
-
+	
 	/**
 	 * @title fillPageStyle
 	 * @param sourceStr
@@ -349,7 +347,7 @@ public class StringUtil {
 	 * @param totalPage
 	 * @param currPage
 	 * @return
-	 * @description ueditor·ÖÒ³ÑùÊ½Ìí¼Ó
+	 * @description ueditoråˆ†é¡µæ ·å¼æ·»åŠ 
 	 */
 	public static String fillPageStyle(String sourceStr, String url, int totalPage, int currPage) {
 		StringBuffer strBuffer = new StringBuffer(sourceStr);
@@ -388,7 +386,7 @@ public class StringUtil {
 		strBuffer.append("</ul>");
 		return strBuffer.toString();
 	}
-
+	
 	public static void main(String[] args) {
 		String str = "123_ueditor_page_break_tag_456_ueditor_page_break_tag_789";
 		// System.out.println(StringUtil.existsStrCount(str,
@@ -399,16 +397,16 @@ public class StringUtil {
 					"www.baidu.com", count + 1, i + 1));
 		}
 	}
-
+	
 	/**
-	 * 
-	 * ·½·¨ËµÃ÷:×Ö·û´®list×ª»»³Éseparator¸ô¿ªµÄ×Ö·û´® "a,2,5,h"
+	 *
+	 * æ–¹æ³•è¯´æ˜:å­—ç¬¦ä¸²listè½¬æ¢æˆseparatoréš”å¼€çš„å­—ç¬¦ä¸² "a,2,5,h"
 	 * @paramlist
 	 * @param
 	 * @return String
 	 */
 	public static String stringListToString(List<String> list, String separator) {
-		// 1£¬Ñ­»·list
+		// 1ï¼Œå¾ªç¯list
 		StringBuilder dest = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
 			dest.append(list.get(i));
@@ -418,17 +416,17 @@ public class StringUtil {
 		}
 		return dest.toString();
 	}
-
+	
 	/**
-	 * 
-	 * ·½·¨ËµÃ÷:×Ö·û´®list×ª»»³Éseparator¸ô¿ªµÄ×Ö·û´® "a,2,5,h"
+	 *
+	 * æ–¹æ³•è¯´æ˜:å­—ç¬¦ä¸²listè½¬æ¢æˆseparatoréš”å¼€çš„å­—ç¬¦ä¸² "a,2,5,h"
 	 * @param @param
 	 *            list
 	 * @param @return
 	 * @return String
 	 */
 	public static String stringListToString(String[] list, String separator) {
-		// 1£¬Ñ­»·list
+		// 1ï¼Œå¾ªç¯list
 		StringBuilder dest = new StringBuilder();
 		for (int i = 0; i < list.length; i++) {
 			dest.append(list[i]);

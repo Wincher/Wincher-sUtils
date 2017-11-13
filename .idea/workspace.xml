@@ -614,7 +614,7 @@
       <workItem from="1506001414916" duration="546000" />
       <workItem from="1510588752945" duration="179000" />
       <workItem from="1510589166839" duration="46000" />
-      <workItem from="1510589604216" duration="110000" />
+      <workItem from="1510589604216" duration="156000" />
     </task>
     <task id="LOCAL-00001" summary="delete some config file">
       <created>1506000566454</created>
@@ -644,11 +644,18 @@
       <option name="project" value="LOCAL" />
       <updated>1510588915715</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="upSrw">
+      <created>1510589728481</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1510589728481</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1655000" />
+    <option name="totallyTimeSpent" value="1701000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="37" y="23" width="1243" height="777" extended-state="6" />
@@ -694,7 +701,8 @@
     <MESSAGE value="delete some config file" />
     <MESSAGE value="add gzip util" />
     <MESSAGE value="update gzip util" />
-    <option name="LAST_COMMIT_MESSAGE" value="update gzip util" />
+    <MESSAGE value="upSrw" />
+    <option name="LAST_COMMIT_MESSAGE" value="upSrw" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
